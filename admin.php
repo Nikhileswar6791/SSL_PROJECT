@@ -4,7 +4,7 @@
  <form action="new.php" method="POST">
         Duration of exam(in minutes): <input type="number" name="dur" required><br><br>
         <button type="submit" name="create_1">Set Time</button><br/><br/><br/>
- </form>
+</form>
  <h2><u>Change in Instruction</u></h2>
  <form action="add_instruction.php" method="POST">
        <button type="submit" name="inst_1">Add instructions</button><br/><br/><br/>
