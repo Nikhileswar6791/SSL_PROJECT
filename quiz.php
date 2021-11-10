@@ -11,8 +11,28 @@
         cursor: pointer;
         width:40%;
     }
+    body 
+    {
+    background-size: cover;
+    background-color:lightgreen;
+    }
+    div{
+      border: 4px solid black;
+      width: 80%;
+     }
+    
+    
+    button:hover {
+        opacity: 0.9;
+    }
+ 
+    
+    .container {
+        padding: 1px;
+    }
 </style>
     </head>
+  
 <?php
 session_start();
 $Server = "localhost";
@@ -109,9 +129,11 @@ $sql1 = "SELECT*FROM questions WHERE Question_no=$pre_q";
     {  
          while($data= $res->fetch_assoc()) 
          {
-              echo '<b>Question &nbsp;'.$data['Question_no'].'&nbsp;:<br />'.$data['Questions'].'</b><br /><br />';
+              echo '<b>Question &nbsp;'.$data['Question_no'].'&nbsp;:  '.$data['Questions'].'</b><br /><br/><br/>';
          }
     }
+ if($pre_q!=$pre_qid)
+    {
     echo '<form action="quiz.php" method="POST">';
     $sql2 = "SELECT*FROM questions WHERE Question_no=$pre_q";
     $res = $connection->query($sql1);
@@ -153,11 +175,50 @@ $sql1 = "SELECT*FROM questions WHERE Question_no=$pre_q";
     }
     if($pre_q!=1)
     {
-        echo '</div><button type="submit" name="prev">Previous</button></div></form>'; 
+        echo '<div><button type="submit" name="prev">Previous</button></div></form>'; 
     }
+}
     if($pre_q==$pre_qid)
     {
-        echo '<form action="result.php" method="POST"><button type="submit">Finish attempt</button></form>';
+        echo '<form action="results.php" method="POST">';
+        $sql2 = "SELECT*FROM questions WHERE Question_no=$pre_q";
+    $res = $connection->query($sql1);
+    if ($res->num_rows > 0) 
+    {  
+         while($data= $res->fetch_assoc()) 
+         {
+            $c=1;
+            while($c<=4)
+            {
+              if($data['crectoption_no']==$c)
+              {
+                  echo '<b>Option &nbsp;'.$c.'&nbsp;:<input type="radio" id="O1" name="o" value="'.$data['crectoption_no'].'">
+                  <label for="O1">'.$data['crectoption'].'</label></b><br /><br />';
+              }
+              if($data['Wrong1_no']==$c)
+              {
+                  echo '<b>Option &nbsp;'.$c.'&nbsp;:<input type="radio" id="O2" name="o" value="'.$data['Wrong1_no'].'">
+                  <label for="O2">'.$data['wrong1'].'</label></b><br /><br />';
+              }
+              if($data['Wrong2_no']==$c)
+              {
+                  echo '<b>Option &nbsp;'.$c.'&nbsp;:<input type="radio" id="O3" name="o" value="'.$data['Wrong2_no'].'">
+                  <label for="O3">'.$data['wrong2'].'</label></b><br /><br />';
+              }
+              if($data['Wrong3_no']==$c)
+              {
+                  echo '<b>Option &nbsp;'.$c.'&nbsp;:<input type="radio" id="O4" name="o" value="'.$data['Wrong3_no'].'">
+                  <label for="O4">'.$data['wrong3'].'</label></b><br /><br />';
+              }
+              $c++;
+            }
+         } 
+ 
+         echo '<form><div><button type="submit" name="result">Finish attempt</button></div></form>';
+         echo '<form action="quiz.php" method="POST"></div><button type="submit" name="prev"><--Previous</button></div></form>';
+         
+    }
     }
 ?>
+
 </html>
