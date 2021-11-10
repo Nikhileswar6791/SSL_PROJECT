@@ -14,13 +14,13 @@ if ($connection->connect_error)
 if(isset($_POST['create_1']))
 {
     $t=$_POST['dur'];
-    $tab4= "CREATE TABLE time
+    $tab4= "CREATE TABLE exam_time
         (
             tim INT(100)
             
         )";
         $connection->query($tab4);
-        $sql2="INSERT INTO time(tim)
+        $sql2="INSERT INTO exam_time(tim)
                    VALUES ('$t')";
         $connection->query($sql2);
         echo "Time setted Successfully";
@@ -29,13 +29,6 @@ if(isset($_POST['add_Ins']))
 {
     $in_no=$_POST['Ins_no'];
     $in=$_POST['Ins'];
-    $tab3= "CREATE TABLE instructions
-        (
-            instruct_no INT(50),
-            instruct VARCHAR(12000)
-            
-        )";
-        $connection->query($tab3);
         $sql1="INSERT INTO  instructions(instruct_no,instruct)
                    VALUES ('$in_no','$in')";
         $connection->query($sql1);
@@ -113,23 +106,6 @@ if(isset($_POST['add']))
     $wrong2_no=$_POST['w2no'];
     $wrong3=$_POST['w3'];
     $wrong3_no=$_POST['w3no'];
-    $sql1 = "SELECT test_name FROM tests";
-    $res = $connection->query($sql1);
-    
-         $tab2= "CREATE TABLE questions
-        (
-            Question_no INT(50),
-            Questions VARCHAR(12000),
-            crectoption VARCHAR(50),
-            crectoption_no INT(100),
-            wrong1 VARCHAR(50),
-            Wrong1_no INT(100),
-            wrong2 VARCHAR(50),
-            Wrong2_no INT(100),
-            wrong3 VARCHAR(50),
-            Wrong3_no INT(100)
-        )";
-        $connection->query($tab2);
         $sql="INSERT INTO  questions(Question_no,Questions,crectoption,crectoption_no,wrong1,Wrong1_no,wrong2,Wrong2_no,wrong3,Wrong3_no)
                    VALUES ('$q_no','$question','$crect','$crect_no','$wrong1','$wrong1_no','$wrong2','$wrong2_no','$wrong3','$wrong3_no')";
         $connection->query($sql);
