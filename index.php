@@ -163,6 +163,27 @@
           q_no INT(50)
        )";
        $connection->query($tab1);
+       $tab3= "CREATE TABLE instructions
+        (
+            instruct_no INT(50),
+            instruct VARCHAR(12000)
+            
+        )";
+        $connection->query($tab3);
+          $tab2= "CREATE TABLE questions
+        (
+            Question_no INT(50),
+            Questions VARCHAR(12000),
+            crectoption VARCHAR(50),
+            crectoption_no INT(100),
+            wrong1 VARCHAR(50),
+            Wrong1_no INT(100),
+            wrong2 VARCHAR(50),
+            Wrong2_no INT(100),
+            wrong3 VARCHAR(50),
+            Wrong3_no INT(100)
+        )";
+        $connection->query($tab2);
        $connection->close();
        ?>
     <script>
