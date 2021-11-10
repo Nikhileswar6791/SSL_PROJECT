@@ -24,6 +24,28 @@ if(isset($_POST['signup']))
         $repass=$_POST['rpsw'];
         if($pass==$repass)
         {
+             $c=0;
+            $sql1 = "SELECT*FROM users";
+             $res = $conn->query($sql1);
+            if ($res->num_rows > 0) 
+            {  
+                while($data = $res->fetch_assoc()) 
+               {
+                  if($data['rollno']==$roll)
+                  {
+                         $c=1;
+                         break;
+                  } 
+                }
+            }
+            if($c==1)
+            {
+                echo "<script>window.location.href='index.php';
+                         alert('Roll number already exists....');
+                         </script>";
+            }
+            if($c==0)
+            {
             $sql3="INSERT INTO users (username,rollno,email,contact,password,q_no)
                    VALUES ('$user','$roll','$email','$phone','$pass','1')";
             if ($conn->query($sql3) === TRUE) 
@@ -47,6 +69,7 @@ if(isset($_POST['signup']))
         else
         {
             echo "Password and Re_enter Password should be same";
+        }
         } 
 }
 else if(isset($_POST['signin']))
@@ -55,14 +78,14 @@ else if(isset($_POST['signin']))
   {
     $fipass=$_POST['email'];
     $pass=$_POST['psw'];
+    if($pass=="ADMIN@2021" && $fipass=="admin@gmail.com")
+    {
+            header("location:admin.php?q=1"); 
+    }     
     $sql1 = "SELECT*FROM users WHERE email='$fipass'";
     $c=0;
       $res = $conn->query($sql1);
-      if($pass=="ADMIN@2021" && $fipass=="admin@gmail.com")
-      {
-            header("location:admin.php?q=1"); 
-      }
-      else if ($res->num_rows > 0) 
+      if ($res->num_rows > 0) 
       {  
          while($data= $res->fetch_assoc()) 
          {
@@ -92,10 +115,16 @@ else if(isset($_POST['signin']))
      else 
      {
         echo "<script>window.location.href='index.php';
-                  alert('Please SignUp first to continue....');
+                  alert('Password Incorrect....');
                   </script>";
      }
   }
+   else 
+   {
+        echo "<script>window.location.href='index.php';
+                  alert('Please sign up first to continue....');
+                  </script>";
+   }
 }
 }
 ?>
